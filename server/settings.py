@@ -86,17 +86,28 @@ WSGI_APPLICATION = 'server.wsgi.application'
 #     }
 # }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.getenv('DB_NAME'),
+#         'USER': os.getenv('DB_USER'),
+#         'PASSWORD': os.getenv('DB_PASSWORD'),
+#         'HOST': os.getenv('DB_HOST'),
+#         'PORT': os.getenv('DB_PORT'),
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME'),
-        'USER': os.getenv('DB_USER'),
-        'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': os.getenv('DB_HOST'),
-        'PORT': os.getenv('DB_PORT'),
-
+        'NAME': os.getenv('LC_DB_NAME'),
+        'USER': os.getenv('LC_DB_USER'),
+        'PASSWORD': os.getenv('LC_DB_PASSWORD'),
+        'HOST': os.getenv('LC_DB_HOST'),
+        'PORT': os.getenv('LC_DB_PORT'),
     }
 }
+
 
 
 # Password validation
@@ -142,9 +153,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
-    "http://localhost:3001",
-    "http://localhost:5000",
     "http://127.0.0.1:3000",
-    "http://127.0.0.1:3001",
-    "http://127.0.0.1:5001",
+]
+
+CORS_ORIGIN_WHITELIST = [
+    "https://client-backendifyi.vercel.app/",
 ]
