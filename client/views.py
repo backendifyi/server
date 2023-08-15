@@ -24,6 +24,7 @@ client_secrets_data = json.loads(os.getenv('GOOGLE_CLIENT_SECRET_DATA'))
 class GoogleAuthURLView(APIView):
 
     def get(self, request):
+        print("called get of gauth")
         google_auth_url = "https://accounts.google.com/o/oauth2/v2/auth"
 
         params = {
