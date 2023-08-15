@@ -22,6 +22,7 @@ client_secrets_data = json.loads(os.getenv('GOOGLE_CLIENT_SECRET_DATA'))
 
 
 class GoogleAuthURLView(APIView):
+    print("in view auth")
 
     def get(self, request):
         print("called get of gauth")
