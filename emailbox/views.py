@@ -29,14 +29,15 @@ class EmailBoxView(APIView):
     def post(self, request):
         user = request.user
         project_name = request.data.get("project_name")
-        # Check if project name already exists
-        if ProjectModel.objects.filter(name=project_name, user=user).exists():
-            return Response({"message": "Project with the same name already exists."}, status=status.HTTP_409_CONFLICT)
-
         # Get count of projects
         count = ProjectModel.objects.filter(user=user).aggregate(project_count=Count('id'))['project_count']
         if count == 3:
             return Response({"message": "Project creation limit reached."}, status=status.HTTP_406_NOT_ACCEPTABLE)
+
+        # Check if project name already exists
+        if ProjectModel.objects.filter(name=project_name, user=user).exists():
+            return Response({"message": "Project with the same name already exists."}, status=status.HTTP_409_CONFLICT)
+
         product = "EMAILBOX"
         key = secrets.token_hex(32)
         project = ProjectModel.objects.create(name=project_name, user=user, product=product, key=key)
@@ -144,6 +145,7 @@ class EmailView(APIView):
     def post(self, request):
         email = request.data.get("email")
         project_id = request.auth
+        # print(email, project_id)
         try:
             emailbox = EmailBoxModel.objects.get(project__id=project_id)
 
@@ -160,7 +162,7 @@ class EmailView(APIView):
                 # check validation of email
                 # TODO: Add function in background task
                 email_val = validator(email)
-                print(email_val["is_valid"])
+                # print(email_val["is_valid"])
                 # Email doesn't exist, create a new one
                 create = EmailModel.objects.create(emailbox=emailbox, email_address=email,
                                                    is_valid=email_val["is_valid"],
@@ -191,7 +193,7 @@ class AllEmailView(APIView):
         paginated_emails = paginator.paginate_queryset(emails, request)
 
         serializer = AllEmailSerializer(paginated_emails, many=True)
-        print(serializer.data)
+        # print(serializer.data)
         return paginator.get_paginated_response(serializer.data)
 
 class InstantView(APIView):
@@ -227,7 +229,7 @@ class CSVView(APIView):
         dns_status = request.data.get("dns_status")
         disposable_status = request.data.get("disposable_status")
         free_status = request.data.get("free_status")
-        print(EmailModel.objects.filter(emailbox__project__id=project_id))
+        # print(EmailModel.objects.filter(emailbox__project__id=project_id))
         try:
             if free_status is True or free_status is False:
                 email_objs = EmailModel.objects.filter(emailbox__project__id=project_id, role_status=role_status,
@@ -248,7 +250,7 @@ class CSVView(APIView):
             return Response({"message": "EmailBoxModel not found"}, status=status.HTTP_404_NOT_FOUND)
 
         df = pd.DataFrame.from_records(email_objs, columns=['email_address', 'is_valid', 'time_added', 'total_request',  'role_status', 'disposable_status', 'free_status', 'dns_status' , 'role', 'disposable_provider', 'domain', 'account'])
-        print(df)
+        # print(df)
         csv_data = df.to_csv(index=False)
         send_csv(csv_data)
 

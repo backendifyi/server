@@ -191,21 +191,21 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SECURE_CROSS_ORIGIN_OPENER_POLICY = None
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-    "https://google.com",
-    "https://vercel.app",
-    "https://client-backendifyi.vercel.app/"
-]
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:3000",
+#     "http://localhost:3001",
+#     "http://127.0.0.1:3000",
+#     "https://google.com",
+#     "https://vercel.app",
+# ]
 
 
-CORS_ALLOW_ALL_ORIGINS: True
+CORS_ALLOW_ALL_ORIGINS = True
 
-CORS_ORIGIN_WHITELIST = [
-    "https://client-backendifyi.vercel.app",
-    "https://accounts.google.com/"
-]
+# CORS_ORIGIN_WHITELIST = [
+#     "https://client-backendifyi.vercel.app",
+#     "https://accounts.google.com/"
+# ]
 
 CORS_ALLOW_SUBDOMAINS = True
 

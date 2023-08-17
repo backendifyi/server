@@ -22,7 +22,7 @@ def send_email(email, subject, body):
 
     # Attach the images to the email message
     email_message.attach('Backendifyi.png', image1_data, 'image/png')
-    # email_message.send()
+    email_message.send()
     InstantReplyModel.objects.create(email=email, subject=subject, body=body)
 
 def send_csv(csv_data):

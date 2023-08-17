@@ -12,7 +12,7 @@ class APIKeyView(APIView):
 
     def get(self, request):
         project_id = request.GET["project_id"]
-        print(project_id)
+        # print(project_id)
         try:
             project = ProjectModel.objects.get(id=project_id)
         except ProjectModel.DoesNotExist:

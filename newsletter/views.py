@@ -10,7 +10,7 @@ class NewsEmailView(APIView):
         serializer = EmailSerializer(data=request.data)
         if serializer.is_valid():
             email = serializer.validated_data["email"]
-            print(serializer)
+            # print(serializer)
             if EmailModel.objects.filter(email=email).exists():
                 return Response({'email': 'Email already exists.'}, status=status.HTTP_409_CONFLICT)
             serializer.save()

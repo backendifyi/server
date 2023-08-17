@@ -22,7 +22,6 @@ client_secrets_data = json.loads(os.getenv('GOOGLE_CLIENT_SECRET_DATA'))
 
 
 class GoogleAuthURLView(APIView):
-    print("in view auth")
 
     def get(self, request):
         print("called get of gauth")
@@ -58,7 +57,7 @@ class GoogleAuthCallbackView(APIView):
 
         credentials = flow.credentials
         access_token = credentials.token
-        print(access_token)
+        # print(access_token)
         headers = {'Authorization': f'Bearer {access_token}'}
         response = requests.get('https://www.googleapis.com/oauth2/v3/userinfo', headers=headers)
         user_info = response.json()
@@ -74,7 +73,7 @@ class GoogleAuthCallbackView(APIView):
             AccessTokenModel.objects.create(user=user, token=access_token)
             profile = ClientProfileModel.objects.create(user=user, name=name, image_url=image_url)
             profile.save()
-            print("user created")
+            # print("user created")
         else:
             user = isRegistered[0]
             try:
@@ -84,7 +83,7 @@ class GoogleAuthCallbackView(APIView):
             except:
                 AccessTokenModel.objects.create(user=user, token=access_token)
 
-            print("token updated")
+            # print("token updated")
 
         # print(email, name)
         # print("end")
@@ -102,7 +101,7 @@ class ProfileView(APIView):
             "email": user.email,
             "image_url": client_profile.image_url
         }
-        print(res)
+        # print(res)
         return Response(res, status=status.HTTP_200_OK)
 
 
@@ -110,7 +109,7 @@ class LogoutView(APIView):
 
     def post(self, request):
         user = request.user
-        print(user)
+        # print(user)
         token_obj = AccessTokenModel.objects.get(user=user)
         token_obj.delete()
         return Response({"message": "Token Deleted"}, status=status.HTTP_200_OK)

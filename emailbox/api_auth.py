@@ -4,6 +4,7 @@ from project.models import ProjectModel
 class APIAuthentication:
     def authenticate(self, request):
         # Get the access token from the request headers
+        # print("checking token")
         auth_header = request.headers.get('Authorization')
         if not auth_header:
             return None
@@ -13,7 +14,6 @@ class APIAuthentication:
             _, token = auth_header.split()
         except ValueError:
             return None
-
         # Check if the token exists in the ProjectModel
         try:
             project = ProjectModel.objects.get(key=token)

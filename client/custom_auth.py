@@ -24,5 +24,5 @@ class TokenAuthentication(authentication.BaseAuthentication):
             raise AuthenticationFailed('Invalid access token')
 
         # Return the authenticated user and token
-        print(access_token.user)
+        # print(access_token.user)
         return (access_token.user, access_token)
