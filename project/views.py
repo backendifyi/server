@@ -57,6 +57,7 @@ class ProjectView(APIView):
     def patch(self, request):
         project_name = request.data.get("project_name")
         project_id = request.data.get("project_id")
+        print(project_id, project_name)
         try:
             project = ProjectModel.objects.get(id=project_id)
         except ProjectModel.DoesNotExist:

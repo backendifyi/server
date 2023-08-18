@@ -19,6 +19,7 @@ from .validate_email import validator
 from .pagination import AllEmailPagination
 from .serializers import AllEmailSerializer, EmailSerializer
 
+from rest_framework.throttling import AnonRateThrottle, UserRateThrottle, ScopedRateThrottle
 
 
 class EmailBoxView(APIView):
@@ -140,6 +141,8 @@ class EmailboxListView(APIView):
         return Response(response, status=status.HTTP_200_OK)
 
 class EmailView(APIView):
+    throttle_classes = [ScopedRateThrottle]
+    throttle_scope = 'custom_scope'
     authentication_classes = [APIAuthentication]
 
     def post(self, request):
@@ -201,8 +204,10 @@ class InstantView(APIView):
 
     def get(self, request):
         email_id = request.GET["emailId"]
+        print(email_id)
         try:
             reply = InstantReplyModel.objects.get(email__id=email_id)
+            print(reply)
             response = {
                 "subject": reply.subject,
                 "body": reply.body,
