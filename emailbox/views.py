@@ -141,8 +141,8 @@ class EmailboxListView(APIView):
         return Response(response, status=status.HTTP_200_OK)
 
 class EmailView(APIView):
-    throttle_classes = [ScopedRateThrottle]
-    throttle_scope = 'custom_scope'
+    # throttle_classes = [ScopedRateThrottle]
+    # throttle_scope = 'custom_scope'
     authentication_classes = [APIAuthentication]
 
     def post(self, request):

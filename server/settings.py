@@ -153,12 +153,12 @@ REST_FRAMEWORK = {
         'client.custom_auth.TokenAuthentication',
         # Other authentication classes...
     ],
-    'DEFAULT_THROTTLE_CLASSES': [
-        'rest_framework.throttling.ScopedRateThrottle',
-    ],
-    'DEFAULT_THROTTLE_RATES': {
-        'custom_scope': '3/hour',
-    },
+    # 'DEFAULT_THROTTLE_CLASSES': [
+    #     'rest_framework.throttling.ScopedRateThrottle',
+    # ],
+    # 'DEFAULT_THROTTLE_RATES': {
+    #     'custom_scope': '3/hour',
+    # },
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
 }
 
