@@ -107,27 +107,27 @@ WSGI_APPLICATION = 'server.wsgi.application'
 #     }
 # }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': os.getenv('LC_DB_NAME'),
-#         'USER': os.getenv('LC_DB_USER'),
-#         'PASSWORD': os.getenv('LC_DB_PASSWORD'),
-#         'HOST': os.getenv('LC_DB_HOST'),
-#         'PORT': os.getenv('LC_DB_PORT'),
-#     }
-# }
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('N_DB_NAME'),
-        'USER': os.getenv('N_DB_USER'),
-        'PASSWORD': os.getenv('N_DB_PASSWORD'),
-        'HOST': os.getenv('N_DB_HOST'),
-        'PORT': os.getenv('N_DB_PORT'),
+        'NAME': os.getenv('LC_DB_NAME'),
+        'USER': os.getenv('LC_DB_USER'),
+        'PASSWORD': os.getenv('LC_DB_PASSWORD'),
+        'HOST': os.getenv('LC_DB_HOST'),
+        'PORT': os.getenv('LC_DB_PORT'),
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.getenv('N_DB_NAME'),
+#         'USER': os.getenv('N_DB_USER'),
+#         'PASSWORD': os.getenv('N_DB_PASSWORD'),
+#         'HOST': os.getenv('N_DB_HOST'),
+#         'PORT': os.getenv('N_DB_PORT'),
+#     }
+# }
 
 
 # Password validation
@@ -147,6 +147,16 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': os.getenv('REDIS_LOCATION'),
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [

@@ -7,6 +7,8 @@ from rest_framework import status
 from rest_framework.views import APIView
 import secrets
 import pandas as pd
+from django.utils.decorators import method_decorator
+from django_ratelimit.decorators import ratelimit
 
 from client.custom_auth import TokenAuthentication
 from .api_auth import APIAuthentication
@@ -145,10 +147,11 @@ class EmailView(APIView):
     # throttle_scope = 'custom_scope'
     authentication_classes = [APIAuthentication]
 
+    @method_decorator(ratelimit(key='ip', rate='3/h', method='POST'))
     def post(self, request):
         email = request.data.get("email")
         project_id = request.auth
-        # print(email, project_id)
+        print(email, project_id)
         try:
             emailbox = EmailBoxModel.objects.get(project__id=project_id)
 
